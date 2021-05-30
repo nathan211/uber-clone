@@ -24,6 +24,7 @@ const HomeMap = (props) => {
                 latitudeDelta: 0.0222,
                 longitudeDelta: 0.0122,
             }}
+            showsUserLocation
         >
             {
                 carsData.map(item => (
@@ -32,7 +33,14 @@ const HomeMap = (props) => {
                         coordinate={{ latitude: item.latitude , longitude: item.longitude }}
                     >   
                         <Image 
-                            style={{ width: 50, height: 50, resizeMode: 'contain' }}
+                            style={{ 
+                                width: 50, 
+                                height: 50, 
+                                resizeMode: 'contain',
+                                transform: [{
+                                    rotate: `${item.heading}deg`
+                                }]
+                            }}
                             source={getImage(item.type) } 
                         />
                     </Marker>

@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, SafeAreaView } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete' 
 
 import styles from './styles'
+import PlaceRow from './PlaceRow'
+
+const homePlace = {
+    description: 'Home',
+    geometry: { location: { lat: 48.8152937, lng: 2.4597668 } },
+};
+const workPlace = {
+    description: 'Work',
+    geometry: { location: { lat: 48.8496818, lng: 2.2940881 } },
+};
+ 
 
 const DestinationSearch = (props) => {
     const [originPlace, setOriginPlace] = useState(null)
@@ -15,36 +26,61 @@ const DestinationSearch = (props) => {
     }, [originPlace, destinationPlace])
 
     return (
-        <View style={styles.container}>
-            <GooglePlacesAutocomplete
-                styles={{
-                    textInput: styles.textInput
-                }}
-                placeholder='From'
-                onPress={(data, details = null) => {
-                    setOriginPlace({data, details})
-                }}
-                fetchDetails
-                query={{
-                    key: 'AIzaSyBtmyvg8fmyn5GZSRjHPhEC4PrXOjm5pZg',
-                    language: 'en',
-                }} 
-            />
-            <GooglePlacesAutocomplete
-                styles={{
-                    textInput: styles.textInput
-                }}
-                placeholder='Where to?'
-                onPress={(data, details = null) => {
-                    setDestinationPlace({data, details})
-                }}
-                fetchDetails
-                query={{
-                    key: 'AIzaSyBtmyvg8fmyn5GZSRjHPhEC4PrXOjm5pZg',
-                    language: 'en',
-                }} 
-            />
-        </View>
+        <SafeAreaView>
+            <View style={styles.container}>
+                <GooglePlacesAutocomplete
+                    styles={{
+                        textInput: styles.textInput,
+                        container: styles.autoCompleteContainer,
+                        listView: styles.listView,
+                        separator: styles.separator
+                    }}
+                    enablePoweredByContainer={false}
+                    suppressDefaultStyles 
+                    currentLocation
+                    currentLocationLabel='Current location'
+                    placeholder='From' 
+                    onPress={(data, details = null) => {
+                        setOriginPlace({data, details})
+                    }}
+                    fetchDetails
+                    query={{
+                        key: 'AIzaSyBtmyvg8fmyn5GZSRjHPhEC4PrXOjm5pZg',
+                        language: 'en',
+                    }} 
+                    renderRow={(data) => <PlaceRow data={data} />}
+                    renderDescription={(data) => data.description || data.vicinity}
+                    predefinedPlaces={[homePlace, workPlace]}
+                />
+                <GooglePlacesAutocomplete
+                    styles={{
+                        textInput: styles.textInput,
+                        container: {
+                            ...styles.autoCompleteContainer,
+                            top: 55 
+                        },
+                        separator: styles.separator
+                    }}
+                    enablePoweredByContainer={false}
+                    suppressDefaultStyles
+                    placeholder='Where to?'
+                    onPress={(data, details = null) => {
+                        setDestinationPlace({data, details})
+                    }}
+                    fetchDetails
+                    query={{
+                        key: 'AIzaSyBtmyvg8fmyn5GZSRjHPhEC4PrXOjm5pZg',
+                        language: 'en',
+                    }} 
+                    renderRow={(data) => <PlaceRow data={data} />}
+                    renderDescription={(data) => data.description || data.vicinity}
+                    predefinedPlaces={[homePlace, workPlace]}
+                />
+                <View style={styles.circle} />
+                <View style={styles.line} />
+                <View style={styles.square} />
+            </View>
+        </SafeAreaView>
     )
 }
 
