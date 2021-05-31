@@ -20,7 +20,7 @@ const DestinationSearch = (props) => {
     const [originPlace, setOriginPlace] = useState(null)
     const [destinationPlace, setDestinationPlace] = useState(null)
 
-    const navigation = useNavigation()
+    //const navigation = useNavigation()
 
     useEffect(() => {
        if(originPlace && destinationPlace){
@@ -51,7 +51,7 @@ const DestinationSearch = (props) => {
                     }}
                     fetchDetails
                     query={{
-                        key: 'AIzaSyBtmyvg8fmyn5GZSRjHPhEC4PrXOjm5pZg',
+                        key: 'AIzaSyDAVkJhOyozepqOT7kly47FRl0e3C1UFOY',
                         language: 'en',
                     }} 
                     renderRow={(data) => <PlaceRow data={data} />}
@@ -75,7 +75,7 @@ const DestinationSearch = (props) => {
                     }}
                     fetchDetails
                     query={{
-                        key: 'AIzaSyBtmyvg8fmyn5GZSRjHPhEC4PrXOjm5pZg',
+                        key: 'AIzaSyDAVkJhOyozepqOT7kly47FRl0e3C1UFOY',
                         language: 'en',
                     }} 
                     renderRow={(data) => <PlaceRow data={data} />}
